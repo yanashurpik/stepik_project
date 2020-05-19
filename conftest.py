@@ -12,7 +12,6 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="function")
 def browser(request):
-
     browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption("language")
 
@@ -31,7 +30,7 @@ def browser(request):
         browser = webdriver.Firefox(firefox_profile=fp)
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
-    browser.implicitly_wait(5)
+
     yield browser
     print("\nquit browser..")
     browser.quit()
