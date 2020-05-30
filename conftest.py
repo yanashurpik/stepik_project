@@ -1,17 +1,20 @@
 import pytest
 from selenium import webdriver
+from .page.login_page import LoginPage
 from selenium.webdriver.chrome.options import Options
+import time
 
 
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default="chrome",
                      help="Choose browser: chrome or firefox")
-    parser.addoption('--language', action='store', default="ru",
+    parser.addoption('--language', action='store', default="en",
                      help="Choose language")
 
 
 @pytest.fixture(scope="function")
 def browser(request):
+
     browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption("language")
 
@@ -30,7 +33,14 @@ def browser(request):
         browser = webdriver.Firefox(firefox_profile=fp)
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
-
     yield browser
     print("\nquit browser..")
     browser.quit()
+
+
+@pytest.fixture(scope="function")
+def setup(browser):
+    link = "http://selenium1py.pythonanywhere.com/accounts/login/"
+    page = LoginPage(browser, link)
+    page.open()
+    page.register_new_user(str(time.time()) + "@fakemail.org", str(time.time()))

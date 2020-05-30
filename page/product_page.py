@@ -10,8 +10,6 @@ class ProductPage(BasePage):
         button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         button.click()
 
-        # self.solve_quiz_and_get_code() #для тестирования акций
-
         expected_element = self.browser.find_element(*ProductPageLocators.EXPECTED_BASKET_ELEMENT).text
         real_element = self.browser.find_element(*ProductPageLocators.REAL_BASKET_ELEMENT).text
         assert expected_element == real_element, "PRODUCT IS NOT IN BASKET"

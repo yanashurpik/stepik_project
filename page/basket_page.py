@@ -13,8 +13,4 @@ class BasketPage(BasePage):
     def should_be_empty_basket(self):
 
         real_text = self.browser.find_element(*BasketPageLocators.EMPTY_BASKET).text
-        assert real_text == "Ваша корзина пуста Продолжить покупки", "Basket should be empty"
-
-
-    #Ожидаем, что в корзине нет товаров
-    #Ожидаем, что есть текст о том что корзина пуста
+        assert real_text == "Your basket is empty. Continue shopping", "Basket should be empty"
